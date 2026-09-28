@@ -191,4 +191,75 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
+
+  /* ===================================================
+     7. INTERACTIVE PROJECTS PREVIEW MODAL & VIEW BADGE
+  =================================================== */
+  const projectRows = document.querySelectorAll('.project-row');
+  const projectModal = document.getElementById('projectModal');
+  const modalSlider = document.getElementById('modalSlider');
+  const projectCursorBadge = document.getElementById('projectCursorBadge');
+
+  if (projectModal && projectCursorBadge && window.innerWidth > 768) {
+    let pMouseX = window.innerWidth / 2;
+    let pMouseY = window.innerHeight / 2;
+    let modalPos = { x: pMouseX, y: pMouseY };
+    let badgePos = { x: pMouseX, y: pMouseY };
+
+    window.addEventListener('mousemove', (e) => {
+      pMouseX = e.clientX;
+      pMouseY = e.clientY;
+    });
+
+    function animateProjectPreview() {
+      modalPos.x += (pMouseX - modalPos.x) * 0.12;
+      modalPos.y += (pMouseY - modalPos.y) * 0.12;
+      badgePos.x += (pMouseX - badgePos.x) * 0.18;
+      badgePos.y += (pMouseY - badgePos.y) * 0.18;
+
+      projectModal.style.left = `${modalPos.x}px`;
+      projectModal.style.top = `${modalPos.y}px`;
+
+      projectCursorBadge.style.left = `${badgePos.x}px`;
+      projectCursorBadge.style.top = `${badgePos.y}px`;
+
+      requestAnimationFrame(animateProjectPreview);
+    }
+    requestAnimationFrame(animateProjectPreview);
+
+    projectRows.forEach(row => {
+      row.addEventListener('mouseenter', () => {
+        const index = parseInt(row.getAttribute('data-index') || '0', 10);
+        if (modalSlider) {
+          modalSlider.style.transform = `translateY(-${index * 25}%)`;
+        }
+        projectModal.classList.add('active');
+        projectCursorBadge.classList.add('active');
+      });
+
+      row.addEventListener('mouseleave', () => {
+        projectModal.classList.remove('active');
+        projectCursorBadge.classList.remove('active');
+      });
+    });
+  }
+
+  /* ===================================================
+     8. MAGNETIC BUTTON EFFECT (ABOUT ME & MORE WORK)
+  =================================================== */
+  const magneticButtons = document.querySelectorAll('.about-circle-btn, .more-work-btn');
+  if (window.innerWidth > 768) {
+    magneticButtons.forEach(btn => {
+      btn.addEventListener('mousemove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        btn.style.transform = `translate(${x * 0.25}px, ${y * 0.25}px) scale(1.05)`;
+      });
+
+      btn.addEventListener('mouseleave', () => {
+        btn.style.transform = '';
+      });
+    });
+  }
 });

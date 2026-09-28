@@ -1091,6 +1091,320 @@ body {
 }
 
 /* ==========================================================================
+   PHILOSOPHY & PROJECTS SECTION ("Helping brands to stand out")
+   ========================================================================== */
+.work-section {
+  position: relative;
+  width: 100%;
+  background-color: var(--bg-color);
+  padding: 140px 0 160px;
+  z-index: 20;
+}
+
+.work-container {
+  max-width: 1800px;
+  margin: 0 auto;
+  padding: 0 4rem;
+}
+
+/* Intro / Philosophy Layout */
+.work-intro {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 5rem;
+  align-items: flex-start;
+  margin-bottom: 8rem;
+}
+
+.intro-main {
+  max-width: 900px;
+}
+
+.intro-headline {
+  font-size: clamp(2.3rem, 3.8vw, 3.4rem);
+  font-weight: 400;
+  line-height: 1.28;
+  color: var(--text-primary);
+  letter-spacing: -0.025em;
+  margin: 0;
+}
+
+.intro-aside {
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
+  align-items: flex-start;
+  padding-left: 2rem;
+  position: relative;
+}
+
+.intro-subtext {
+  font-size: 1.25rem;
+  line-height: 1.6;
+  color: var(--text-primary);
+  opacity: 0.72;
+  font-weight: 400;
+  max-width: 440px;
+}
+
+/* "About Me" Large Circular Button */
+.about-btn-wrap {
+  position: relative;
+}
+
+.about-circle-btn {
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  background: #252525;
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  font-size: 1.05rem;
+  font-weight: 500;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s;
+}
+
+.about-btn-label {
+  position: relative;
+  z-index: 2;
+  transition: color 0.35s ease;
+}
+
+.about-btn-fill {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 150%;
+  border-radius: 50%;
+  background: var(--accent-lime);
+  transition: transform 0.5s cubic-bezier(0.76, 0, 0.24, 1);
+  z-index: 1;
+}
+
+.about-circle-btn:hover {
+  transform: scale(1.08);
+  border-color: var(--accent-lime);
+}
+
+.about-circle-btn:hover .about-btn-fill {
+  transform: translateY(-85%);
+}
+
+.about-circle-btn:hover .about-btn-label {
+  color: var(--text-dark);
+}
+
+/* Projects Header & Divider */
+.projects-header {
+  margin-bottom: 1.5rem;
+}
+
+.projects-tag {
+  display: block;
+  text-transform: uppercase;
+  font-size: 1.15rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--text-primary);
+  margin-bottom: 2rem;
+}
+
+.projects-divider {
+  width: 100%;
+  height: 1px;
+  background-color: var(--border-subtle);
+  opacity: 0.6;
+}
+
+/* Projects Showcase Rows */
+.projects-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.project-row {
+  display: block;
+  text-decoration: none;
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 3.2rem 1.5rem;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.project-row-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.project-name {
+  font-size: clamp(2.8rem, 6vw, 5.6rem);
+  font-weight: 400;
+  color: var(--text-primary);
+  letter-spacing: -0.035em;
+  line-height: 1;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s ease;
+}
+
+.project-role {
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: var(--text-primary);
+  opacity: 0.7;
+  letter-spacing: -0.01em;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, color 0.3s ease;
+}
+
+.project-row:hover .project-name {
+  transform: translateX(-24px);
+  color: var(--accent-lime);
+}
+
+.project-row:hover .project-role {
+  transform: translateX(24px);
+  opacity: 1;
+  color: var(--text-bright);
+}
+
+/* More Work Button */
+.more-work-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5rem;
+}
+
+.more-work-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.1rem 3.8rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 9999px;
+  color: var(--text-primary);
+  text-decoration: none;
+  font-size: 1.05rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s;
+}
+
+.more-work-text {
+  position: relative;
+  z-index: 2;
+  transition: color 0.35s ease;
+}
+
+.more-work-fill {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 150%;
+  border-radius: 50%;
+  background: var(--accent-lime);
+  transition: transform 0.5s cubic-bezier(0.76, 0, 0.24, 1);
+  z-index: 1;
+}
+
+.more-work-btn:hover {
+  transform: scale(1.05);
+  border-color: var(--accent-lime);
+}
+
+.more-work-btn:hover .more-work-fill {
+  transform: translateY(-85%);
+}
+
+.more-work-btn:hover .more-work-text {
+  color: var(--text-dark);
+}
+
+/* Floating Project Image Modal (Smooth cursor tracker) */
+.project-modal {
+  position: fixed;
+  width: 380px;
+  height: 270px;
+  top: 0;
+  left: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 80;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+}
+
+.project-modal.active {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
+
+.project-modal-slider {
+  width: 100%;
+  height: 400%;
+  position: relative;
+  transition: transform 0.5s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.modal-slide {
+  width: 100%;
+  height: 25%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-slide img {
+  width: 90%;
+  height: auto;
+  max-height: 90%;
+  object-fit: contain;
+}
+
+/* Floating "View" Cursor Badge */
+.project-cursor-badge {
+  position: fixed;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: var(--accent-lime);
+  color: var(--text-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.92rem;
+  font-weight: 600;
+  pointer-events: none;
+  z-index: 85;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  box-shadow: 0 8px 30px rgba(246, 255, 147, 0.45);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+}
+
+.project-cursor-badge.active {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
+
+/* ==========================================================================
    RESPONSIVE DESIGN (TABLET & MOBILE BREAKPOINTS)
    ========================================================================== */
 @media (max-width: 1024px) {
@@ -1157,6 +1471,26 @@ body {
     grid-template-columns: repeat(3, 1fr);
     row-gap: 4.5rem;
     column-gap: 2.5rem;
+  }
+
+  /* Work Tablet */
+  .work-container {
+    padding: 0 2.5rem;
+  }
+
+  .work-intro {
+    gap: 3rem;
+    margin-bottom: 6rem;
+  }
+
+  .about-circle-btn {
+    width: 145px;
+    height: 145px;
+    font-size: 0.95rem;
+  }
+
+  .project-row {
+    padding: 2.6rem 1rem;
   }
 }
 
@@ -1306,5 +1640,74 @@ body {
   .brand-logo-img {
     max-height: 32px;
     max-width: 135px;
+  }
+
+  /* Work Mobile Overrides */
+  .work-section {
+    padding: 80px 0 110px;
+  }
+
+  .work-container {
+    padding: 0 1.4rem;
+  }
+
+  .work-intro {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    margin-bottom: 4rem;
+  }
+
+  .intro-headline {
+    font-size: 1.95rem;
+  }
+
+  .intro-aside {
+    padding-left: 0;
+    gap: 2.5rem;
+  }
+
+  .intro-subtext {
+    font-size: 1.05rem;
+  }
+
+  .about-circle-btn {
+    width: 125px;
+    height: 125px;
+    font-size: 0.9rem;
+  }
+
+  .project-row {
+    padding: 2.2rem 0;
+  }
+
+  .project-row-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+
+  .project-name {
+    font-size: 2.5rem;
+  }
+
+  .project-row:hover .project-name {
+    transform: translateX(6px);
+  }
+
+  .project-row:hover .project-role {
+    transform: translateX(6px);
+  }
+
+  .project-modal {
+    display: none;
+  }
+
+  .project-cursor-badge {
+    display: none;
+  }
+
+  .more-work-btn {
+    padding: 0.9rem 2.8rem;
+    font-size: 0.95rem;
   }
 }
