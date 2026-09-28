@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
       mouseY = e.clientY;
     });
 
-    const interactiveElements = document.querySelectorAll('a, button, input, textarea, .location-badge');
+    const interactiveElements = document.querySelectorAll('a, button, input, textarea, .location-badge, .hero-portrait');
     interactiveElements.forEach(el => {
       el.addEventListener('mouseenter', () => customCursor.classList.add('active'));
       el.addEventListener('mouseleave', () => customCursor.classList.remove('active'));
@@ -125,7 +125,10 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ===================================================
      4. SUBTLE 3D PARALLAX EFFECT ON HERO
   =================================================== */
-  if (heroImage && window.innerWidth > 768) {
+  const heroWrapper = document.querySelector('.hero-image-wrapper');
+  const heroBacklight = document.querySelector('.hero-backlight');
+
+  if (heroWrapper && window.innerWidth > 768) {
     let targetX = 0;
     let targetY = 0;
     let currentX = 0;
@@ -142,9 +145,21 @@ document.addEventListener('DOMContentLoaded', () => {
       currentX += (targetX - currentX) * 0.05;
       currentY += (targetY - currentY) * 0.05;
 
-      heroImage.style.transform = `scale(1.02) translate(${currentX * -15}px, ${currentY * -10}px)`;
+      heroWrapper.style.transform = `translate(${currentX * -14}px, ${currentY * -8}px)`;
+      if (heroBacklight) {
+        heroBacklight.style.transform = `translateX(calc(-50% + ${currentX * 18}px)) translateY(${currentY * 10}px)`;
+      }
       requestAnimationFrame(animateParallax);
     }
     requestAnimationFrame(animateParallax);
+  }
+
+  /* ===================================================
+     5. TOUCH / CLICK COLOR TOGGLE
+  =================================================== */
+  if (heroImage) {
+    heroImage.addEventListener('click', () => {
+      heroImage.classList.toggle('is-color');
+    });
   }
 });

@@ -383,21 +383,70 @@ body {
   width: 100%;
   height: 100%;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
-  pointer-events: none;
-  z-index: 1;
+  pointer-events: auto;
+  z-index: 5;
+  overflow: hidden;
 }
 
+/* Studio Rim Lighting / Backlight */
+.hero-backlight {
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(750px, 85vw);
+  height: min(750px, 85vw);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(255, 255, 255, 0.09) 0%,
+    rgba(246, 255, 147, 0.035) 45%,
+    rgba(0, 0, 0, 0) 75%
+  );
+  pointer-events: none;
+  filter: blur(55px);
+  z-index: 1;
+  transition: background 0.8s ease, transform 0.8s ease, opacity 0.8s ease;
+}
+
+.hero-image-wrapper:hover .hero-backlight {
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(246, 255, 147, 0.14) 0%,
+    rgba(255, 255, 255, 0.07) 45%,
+    rgba(0, 0, 0, 0) 75%
+  );
+  transform: translateX(-50%) scale(1.08);
+}
+
+/* Portrait Image: Premium Black & White by default, vivid color on hover */
 .hero-portrait {
-  height: 100vh;
+  height: 87vh;
+  max-height: 920px;
   width: auto;
-  max-width: 100%;
-  object-fit: cover;
-  object-position: center 25%;
-  filter: grayscale(100%) contrast(108%) brightness(96%);
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform;
+  max-width: 90vw;
+  object-fit: contain;
+  object-position: center bottom;
+  /* Default: High-end crisp black & white */
+  filter: grayscale(100%) contrast(112%) brightness(95%);
+  transition: filter 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: filter, transform;
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+  transform-origin: center bottom;
+  /* Soft bottom mask so the cut blends seamlessly into darkness */
+  mask-image: linear-gradient(to bottom, black 86%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 86%, transparent 100%);
+}
+
+/* Hover State: Full vivid color with enhanced lighting depth */
+.hero-portrait:hover,
+.hero-image-wrapper:hover .hero-portrait,
+.hero-portrait.is-color {
+  filter: grayscale(0%) contrast(104%) brightness(103%) drop-shadow(0 20px 50px rgba(0, 0, 0, 0.85));
 }
 
 /* Subtle Vignette to dissolve edges perfectly into black */
@@ -405,13 +454,13 @@ body {
   position: absolute;
   inset: 0;
   background: radial-gradient(
-    circle at 50% 45%,
-    rgba(0, 0, 0, 0) 35%,
-    rgba(0, 0, 0, 0.4) 65%,
-    rgba(0, 0, 0, 0.85) 85%,
-    rgba(0, 0, 0, 0.98) 100%
+    circle at 50% 50%,
+    rgba(0, 0, 0, 0) 45%,
+    rgba(0, 0, 0, 0.45) 75%,
+    rgba(0, 0, 0, 0.95) 100%
   );
   pointer-events: none;
+  z-index: 3;
 }
 
 /* Left Location Badge */
@@ -839,8 +888,9 @@ body {
   }
 
   .hero-portrait {
-    object-position: center 30%;
-    transform: scale(1.05);
+    height: 72vh;
+    max-height: 560px;
+    object-position: center bottom;
   }
 
   /* Reposition location badge on mobile */
