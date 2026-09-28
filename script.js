@@ -280,4 +280,76 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }, { passive: true });
   }
+
+  /* ===================================================
+     10. TESTIMONIALS CAROUSEL SLIDER
+  =================================================== */
+  const testimonialSlides = document.querySelectorAll('.testimonial-slide');
+  const paginationDots = document.querySelectorAll('.pagination-dot');
+  const prevTestimonialBtn = document.getElementById('prevTestimonial');
+  const nextTestimonialBtn = document.getElementById('nextTestimonial');
+  let currentSlideIndex = 0;
+  const totalSlides = testimonialSlides.length;
+
+  function showSlide(index) {
+    if (totalSlides === 0) return;
+
+    // Wrap around index
+    currentSlideIndex = (index + totalSlides) % totalSlides;
+
+    testimonialSlides.forEach((slide, i) => {
+      if (i === currentSlideIndex) {
+        slide.classList.add('active');
+      } else {
+        slide.classList.remove('active');
+      }
+    });
+
+    paginationDots.forEach((dot, i) => {
+      if (i === currentSlideIndex) {
+        dot.classList.add('active');
+      } else {
+        dot.classList.remove('active');
+      }
+    });
+  }
+
+  if (prevTestimonialBtn) {
+    prevTestimonialBtn.addEventListener('click', () => {
+      showSlide(currentSlideIndex - 1);
+    });
+  }
+
+  if (nextTestimonialBtn) {
+    nextTestimonialBtn.addEventListener('click', () => {
+      showSlide(currentSlideIndex + 1);
+    });
+  }
+
+  paginationDots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      showSlide(index);
+    });
+  });
+
+  // Touch swipe support for mobile
+  const testimonialsWrapper = document.querySelector('.testimonials-wrapper');
+  if (testimonialsWrapper) {
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    testimonialsWrapper.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    testimonialsWrapper.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      const swipeDistance = touchEndX - touchStartX;
+      if (swipeDistance > 45) {
+        showSlide(currentSlideIndex - 1);
+      } else if (swipeDistance < -45) {
+        showSlide(currentSlideIndex + 1);
+      }
+    }, { passive: true });
+  }
 });
