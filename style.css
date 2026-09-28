@@ -1,0 +1,906 @@
+/* ==========================================================================
+   MAXIME VEILLEUX — PORTFOLIO HEADER & HERO STYLES
+   ========================================================================== */
+
+/* --- Custom Variables & Palette --- */
+:root {
+  --bg-color: #000000;
+  --bg-surface: #181818;
+  --bg-pill: #252525;
+  --bg-pill-hover: #333333;
+  --accent-lime: #F6FF93;
+  --accent-lime-hover: #e5f07a;
+  
+  --text-primary: #D5CEC7;
+  --text-bright: #FFFFFF;
+  --text-muted: #8E8882;
+  --text-dark: #0A0A0A;
+
+  --border-subtle: rgba(213, 206, 199, 0.12);
+  --border-focus: rgba(246, 255, 147, 0.4);
+
+  --font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-fast: all 0.2s ease;
+}
+
+/* --- Reset & Global Baseline --- */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  background-color: var(--bg-color);
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  min-height: 100vh;
+  width: 100vw;
+  overflow-x: hidden;
+  position: relative;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* --- Film Grain Noise Overlay --- */
+.noise-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background-image: url('images/black-noise.png');
+  background-repeat: repeat;
+  opacity: 0.14;
+  z-index: 99;
+}
+
+/* --- Custom Cursor (Desktop Only) --- */
+.custom-cursor {
+  position: fixed;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(246, 255, 147, 0.25);
+  backdrop-filter: blur(1px);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s, height 0.2s, background 0.2s, transform 0.05s linear;
+  z-index: 9999;
+  display: none;
+}
+
+@media (pointer: fine) {
+  .custom-cursor {
+    display: block;
+  }
+}
+
+.custom-cursor.active {
+  width: 48px;
+  height: 48px;
+  background: rgba(246, 255, 147, 0.4);
+}
+
+/* ==========================================================================
+   HEADER / NAVBAR
+   ========================================================================== */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  padding: 2.2rem 3.5rem;
+  pointer-events: auto;
+}
+
+.header-container {
+  max-width: 1800px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Logo "MAX" */
+.brand-logo {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  transition: var(--transition-smooth);
+}
+
+.logo-img {
+  height: 20px;
+  width: auto;
+  display: block;
+  opacity: 0.95;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+}
+
+.brand-logo:hover .logo-img {
+  transform: scale(1.08);
+  opacity: 1;
+}
+
+/* Pill Menu Button */
+.menu-btn {
+  background: var(--bg-pill);
+  border: 1px solid var(--border-subtle);
+  border-radius: 9999px;
+  height: 42px;
+  min-width: 110px;
+  padding: 0 1.25rem;
+  cursor: pointer;
+  outline: none;
+  position: relative;
+  overflow: hidden;
+  transition: var(--transition-smooth);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
+}
+
+.menu-btn:hover {
+  background: var(--bg-pill-hover);
+  border-color: rgba(213, 206, 199, 0.25);
+  transform: translateY(-1px);
+}
+
+.menu-btn-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-state {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+}
+
+.btn-state.state-menu {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.btn-state.state-close {
+  opacity: 0;
+  transform: translateY(120%);
+}
+
+.menu-btn.active .btn-state.state-menu {
+  opacity: 0;
+  transform: translateY(-120%);
+}
+
+.menu-btn.active .btn-state.state-close {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.menu-btn.active {
+  background: #111111;
+  border-color: var(--accent-lime);
+}
+
+.menu-btn.active .btn-state.state-close {
+  color: var(--accent-lime);
+}
+
+/* ==========================================================================
+   NAVIGATION DRAWER (FULL-SCREEN MODAL / MENU)
+   ========================================================================== */
+.nav-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 95;
+  display: flex;
+  justify-content: flex-end;
+  pointer-events: none;
+  visibility: hidden;
+  transition: visibility 0.5s ease;
+}
+
+.nav-drawer.open {
+  pointer-events: auto;
+  visibility: visible;
+}
+
+.nav-drawer-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.nav-drawer.open .nav-drawer-backdrop {
+  opacity: 1;
+}
+
+.nav-drawer-content {
+  position: relative;
+  width: 100%;
+  max-width: 540px;
+  height: 100%;
+  background: #141414;
+  border-left: 1px solid var(--border-subtle);
+  padding: 6.5rem 4rem 3.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transform: translateX(100%);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: -10px 0 50px rgba(0, 0, 0, 0.8);
+  overflow-y: auto;
+}
+
+.nav-drawer.open .nav-drawer-content {
+  transform: translateX(0);
+}
+
+.nav-header {
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 1rem;
+}
+
+.nav-tag {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin: 3rem 0;
+}
+
+.nav-link {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 1.2rem;
+  text-decoration: none;
+  color: var(--text-primary);
+  font-size: 2.8rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  transition: var(--transition-fast);
+}
+
+.nav-num {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  transition: color 0.2s ease;
+}
+
+.nav-title {
+  position: relative;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s ease;
+}
+
+.nav-link:hover .nav-title,
+.nav-link.active .nav-title {
+  color: var(--accent-lime);
+  transform: translateX(12px);
+}
+
+.nav-link:hover .nav-num {
+  color: var(--accent-lime);
+}
+
+.nav-footer {
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+}
+
+.footer-label {
+  display: block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.social-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+}
+
+.social-links a {
+  text-decoration: none;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  transition: color 0.2s ease;
+}
+
+.social-links a:hover {
+  color: var(--accent-lime);
+}
+
+.nav-email {
+  color: var(--accent-lime);
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+/* ==========================================================================
+   HERO SECTION (EXACT LAYOUT FROM SCREENSHOT)
+   ========================================================================== */
+.hero-section {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  min-height: 700px;
+  overflow: hidden;
+  background-color: var(--bg-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Central Portrait Image */
+.hero-image-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hero-portrait {
+  height: 100vh;
+  width: auto;
+  max-width: 100%;
+  object-fit: cover;
+  object-position: center 25%;
+  filter: grayscale(100%) contrast(108%) brightness(96%);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+/* Subtle Vignette to dissolve edges perfectly into black */
+.portrait-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 50% 45%,
+    rgba(0, 0, 0, 0) 35%,
+    rgba(0, 0, 0, 0.4) 65%,
+    rgba(0, 0, 0, 0.85) 85%,
+    rgba(0, 0, 0, 0.98) 100%
+  );
+  pointer-events: none;
+}
+
+/* Left Location Badge */
+.location-badge {
+  position: absolute;
+  left: 0;
+  top: 38%;
+  transform: translateY(-50%);
+  z-index: 20;
+}
+
+.badge-content {
+  background: var(--bg-pill);
+  border: 1px solid var(--border-subtle);
+  border-left: none;
+  border-radius: 0 9999px 9999px 0;
+  padding: 0.75rem 1rem 0.75rem 3.8rem;
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  transition: var(--transition-smooth);
+}
+
+.badge-content:hover {
+  background: var(--bg-pill-hover);
+  padding-left: 4.2rem;
+  border-color: rgba(246, 255, 147, 0.2);
+}
+
+.badge-text {
+  display: flex;
+  flex-direction: column;
+  color: var(--text-primary);
+  font-size: 1.05rem;
+  line-height: 1.25;
+}
+
+.badge-text span {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+.badge-text .city-name {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-bright);
+}
+
+/* Globe inside Yellow Accent Circle */
+.badge-globe-wrapper {
+  position: relative;
+}
+
+.badge-globe {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--accent-lime);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-dark);
+  box-shadow: 0 0 20px rgba(246, 255, 147, 0.25);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.badge-content:hover .badge-globe {
+  transform: scale(1.08);
+}
+
+.globe-icon {
+  width: 28px;
+  height: 28px;
+  animation: spinGlobe 14s linear infinite;
+  transform-origin: center;
+}
+
+@keyframes spinGlobe {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Right Content: Arrow ↘ + "Freelance Designer & Developer" */
+.hero-role-info {
+  position: absolute;
+  right: 12%;
+  top: 38%;
+  transform: translateY(-50%);
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.4rem;
+}
+
+.role-arrow {
+  color: var(--text-primary);
+  opacity: 0.85;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.hero-role-info:hover .role-arrow {
+  transform: translate(4px, 4px);
+  opacity: 1;
+}
+
+.role-labels {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.role-main {
+  font-size: 1.65rem;
+  font-weight: 400;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.role-sub {
+  font-size: 1.65rem;
+  font-weight: 400;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+/* ==========================================================================
+   GIANT BOTTOM MARQUEE (INFINITE CONTINUOUS TICKER)
+   ========================================================================== */
+.hero-marquee-container {
+  position: absolute;
+  bottom: -0.5rem;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 10;
+  /* Soft gradient fade on extremes */
+  mask-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 1) 4%,
+    rgba(0, 0, 0, 1) 96%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 1) 4%,
+    rgba(0, 0, 0, 1) 96%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marqueeScroll 24s linear infinite;
+  will-change: transform;
+}
+
+.marquee-item {
+  font-size: clamp(5rem, 15vw, 14.5rem);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 0.95;
+  color: var(--text-primary);
+  text-transform: none;
+  user-select: none;
+  padding-right: 0.1em;
+  opacity: 0.95;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.7);
+}
+
+@keyframes marqueeScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* ==========================================================================
+   BOTTOM CENTER "QUICK HIRE AVAILABLE" BADGE
+   ========================================================================== */
+.quick-hire-badge {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 30;
+}
+
+.quick-hire-btn {
+  background: var(--accent-lime);
+  color: var(--text-dark);
+  border: none;
+  border-radius: 9999px;
+  height: 44px;
+  padding: 0 1.5rem;
+  font-family: var(--font-family);
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  cursor: pointer;
+  box-shadow: 0 6px 25px rgba(246, 255, 147, 0.35);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.2s ease, box-shadow 0.3s ease;
+}
+
+.quick-hire-btn:hover {
+  background: var(--accent-lime-hover);
+  transform: scale(1.06);
+  box-shadow: 0 8px 30px rgba(246, 255, 147, 0.5);
+}
+
+.quick-hire-btn svg {
+  fill: var(--text-dark);
+  color: var(--text-dark);
+}
+
+/* ==========================================================================
+   MODAL DIALOG (QUICK HIRE FORM)
+   ========================================================================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(10px);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.modal-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-card {
+  background: #181818;
+  border: 1px solid var(--border-subtle);
+  border-radius: 24px;
+  width: 100%;
+  max-width: 480px;
+  padding: 2.5rem;
+  position: relative;
+  transform: translateY(20px) scale(0.96);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9);
+}
+
+.modal-overlay.open .modal-card {
+  transform: translateY(0) scale(1);
+}
+
+.modal-close {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.8rem;
+  cursor: pointer;
+  line-height: 1;
+  transition: color 0.2s ease;
+}
+
+.modal-close:hover {
+  color: var(--text-bright);
+}
+
+.status-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(246, 255, 147, 0.1);
+  border: 1px solid rgba(246, 255, 147, 0.25);
+  padding: 0.35rem 0.8rem;
+  border-radius: 9999px;
+  font-size: 0.78rem;
+  color: var(--accent-lime);
+  font-weight: 500;
+  margin-bottom: 1.2rem;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-lime);
+  box-shadow: 0 0 10px var(--accent-lime);
+  animation: pulseDot 2s infinite ease-in-out;
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.8); }
+}
+
+.modal-header h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-bright);
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.modal-header p {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+}
+
+.hire-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  background: #222222;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 0.9rem 1.1rem;
+  color: var(--text-bright);
+  font-family: var(--font-family);
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: var(--accent-lime);
+  background: #282828;
+}
+
+.hire-submit-btn {
+  background: var(--accent-lime);
+  color: var(--text-dark);
+  border: none;
+  border-radius: 12px;
+  padding: 1rem;
+  font-family: var(--font-family);
+  font-size: 0.98rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.hire-submit-btn:hover {
+  background: var(--accent-lime-hover);
+  transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN (TABLET & MOBILE BREAKPOINTS)
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .site-header {
+    padding: 1.8rem 2rem;
+  }
+
+  .badge-content {
+    padding-left: 2.2rem;
+    gap: 1rem;
+  }
+
+  .badge-text span {
+    font-size: 0.85rem;
+  }
+
+  .badge-text .city-name {
+    font-size: 1.1rem;
+  }
+
+  .badge-globe {
+    width: 44px;
+    height: 44px;
+  }
+
+  .globe-icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .hero-role-info {
+    right: 6%;
+    gap: 1rem;
+  }
+
+  .role-main, .role-sub {
+    font-size: 1.35rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .site-header {
+    padding: 1.4rem 1.4rem;
+  }
+
+  .hero-portrait {
+    object-position: center 30%;
+    transform: scale(1.05);
+  }
+
+  /* Reposition location badge on mobile */
+  .location-badge {
+    top: auto;
+    bottom: 8.5rem;
+    transform: none;
+  }
+
+  .badge-content {
+    padding: 0.6rem 0.9rem 0.6rem 1.6rem;
+    gap: 0.8rem;
+  }
+
+  .badge-globe {
+    width: 38px;
+    height: 38px;
+  }
+
+  .globe-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Reposition role info on mobile */
+  .hero-role-info {
+    top: 6.8rem;
+    right: 1.4rem;
+    transform: none;
+    align-items: flex-end;
+    text-align: right;
+  }
+
+  .role-arrow {
+    display: none;
+  }
+
+  .role-main, .role-sub {
+    font-size: 1.1rem;
+  }
+
+  .marquee-item {
+    font-size: clamp(3.8rem, 16vw, 6.5rem);
+  }
+
+  .quick-hire-badge {
+    bottom: 1.2rem;
+  }
+
+  .quick-hire-btn {
+    height: 38px;
+    font-size: 0.82rem;
+    padding: 0 1.1rem;
+  }
+
+  .nav-drawer-content {
+    padding: 5.5rem 2rem 2.5rem;
+  }
+
+  .nav-link {
+    font-size: 2.2rem;
+  }
+}
