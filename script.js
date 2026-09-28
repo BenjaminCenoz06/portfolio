@@ -262,4 +262,22 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   }
+
+  /* ===================================================
+     9. DUAL GALLERY SCROLL PARALLAX
+  =================================================== */
+  const gallerySection = document.getElementById('gallery');
+  const trackLeft = document.getElementById('galleryTrackLeft');
+  const trackRight = document.getElementById('galleryTrackRight');
+
+  if (gallerySection && window.innerWidth > 768) {
+    window.addEventListener('scroll', () => {
+      const rect = gallerySection.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        const scrollProgress = (window.innerHeight - rect.top) * 0.08;
+        if (trackLeft) trackLeft.style.marginLeft = `-${scrollProgress}px`;
+        if (trackRight) trackRight.style.marginLeft = `${scrollProgress}px`;
+      }
+    }, { passive: true });
+  }
 });
