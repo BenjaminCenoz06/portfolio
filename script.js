@@ -162,4 +162,33 @@ document.addEventListener('DOMContentLoaded', () => {
       heroImage.classList.toggle('is-color');
     });
   }
+
+  /* ===================================================
+     6. SERVICES ACCORDION
+  =================================================== */
+  const accordionTriggers = document.querySelectorAll('.accordion-trigger');
+
+  accordionTriggers.forEach(trigger => {
+    trigger.addEventListener('click', () => {
+      const currentItem = trigger.closest('.accordion-item');
+      const isAlreadyActive = currentItem.classList.contains('active');
+
+      // Close other accordion items for clean exclusive accordion experience
+      document.querySelectorAll('.accordion-item').forEach(item => {
+        if (item !== currentItem) {
+          item.classList.remove('active');
+          const otherTrigger = item.querySelector('.accordion-trigger');
+          if (otherTrigger) otherTrigger.setAttribute('aria-expanded', 'false');
+        }
+      });
+
+      if (isAlreadyActive) {
+        currentItem.classList.remove('active');
+        trigger.setAttribute('aria-expanded', 'false');
+      } else {
+        currentItem.classList.add('active');
+        trigger.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
 });

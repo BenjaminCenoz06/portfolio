@@ -842,6 +842,197 @@ body {
 }
 
 /* ==========================================================================
+   SERVICES & CAPABILITIES SECTION ("At your service")
+   ========================================================================== */
+.services-section {
+  position: relative;
+  width: 100%;
+  background-color: var(--bg-color);
+  padding: 160px 0 180px;
+  z-index: 20;
+}
+
+.services-container {
+  max-width: 1800px;
+  margin: 0 auto;
+  padding: 0 4rem;
+}
+
+/* Top Row: "At your service" + Subtext */
+.services-hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 4rem;
+  margin-bottom: 7rem;
+}
+
+.services-title {
+  font-size: clamp(3.8rem, 8.5vw, 8rem);
+  font-weight: 400;
+  color: var(--text-primary);
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  margin: 0;
+}
+
+.services-desc-box {
+  max-width: 380px;
+  padding-bottom: 0.8rem;
+}
+
+.services-desc {
+  font-size: 1.25rem;
+  line-height: 1.55;
+  color: var(--text-primary);
+  opacity: 0.72;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+/* Subheader: "EXPLORE MY CAPABILITIES" */
+.capabilities-header {
+  margin-bottom: 1.5rem;
+}
+
+.capabilities-tag {
+  display: block;
+  text-transform: uppercase;
+  font-size: 1.15rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--text-primary);
+  margin-bottom: 2rem;
+}
+
+.capabilities-divider {
+  width: 100%;
+  height: 1px;
+  background-color: var(--border-subtle);
+  opacity: 0.6;
+}
+
+/* Accordion List */
+.accordion-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.accordion-item {
+  border-bottom: 1px solid var(--border-subtle);
+  transition: background 0.3s ease;
+}
+
+.accordion-trigger {
+  width: 100%;
+  background: transparent;
+  border: none;
+  padding: 2.8rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  text-align: left;
+  outline: none;
+  transition: padding 0.3s ease;
+}
+
+.accordion-title {
+  font-size: clamp(2.8rem, 6.2vw, 6rem);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  color: var(--text-primary);
+  transition: color 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-block;
+}
+
+.accordion-trigger:hover .accordion-title {
+  color: var(--accent-lime);
+  transform: translateX(10px);
+}
+
+.accordion-item.active .accordion-title {
+  color: var(--accent-lime);
+}
+
+.accordion-btn-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--accent-lime);
+  color: var(--text-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 20px rgba(246, 255, 147, 0.3);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease, color 0.3s ease;
+}
+
+.accordion-trigger:hover .accordion-btn-icon {
+  transform: scale(1.08);
+}
+
+.accordion-item.active .accordion-btn-icon {
+  transform: rotate(45deg);
+  background: #2A2A2A;
+  color: var(--text-primary);
+  box-shadow: none;
+}
+
+.accordion-item.active .accordion-trigger:hover .accordion-btn-icon {
+  transform: rotate(45deg) scale(1.08);
+}
+
+/* Accordion Expandable Panel */
+.accordion-panel {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+}
+
+.accordion-item.active .accordion-panel {
+  max-height: 500px;
+  opacity: 1;
+}
+
+.accordion-panel-inner {
+  padding: 0 0 3.5rem;
+  max-width: 950px;
+}
+
+.panel-text {
+  font-size: 1.25rem;
+  line-height: 1.65;
+  color: var(--text-primary);
+  opacity: 0.85;
+  margin-bottom: 2rem;
+}
+
+.panel-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.tag {
+  font-size: 0.88rem;
+  padding: 0.45rem 1.1rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text-primary);
+  transition: border-color 0.25s, background 0.25s, color 0.25s;
+}
+
+.tag:hover {
+  border-color: var(--accent-lime);
+  background: rgba(246, 255, 147, 0.1);
+  color: var(--accent-lime);
+}
+
+/* ==========================================================================
    RESPONSIVE DESIGN (TABLET & MOBILE BREAKPOINTS)
    ========================================================================== */
 @media (max-width: 1024px) {
@@ -879,6 +1070,24 @@ body {
 
   .role-main, .role-sub {
     font-size: 1.35rem;
+  }
+
+  .services-container {
+    padding: 0 2.5rem;
+  }
+
+  .services-hero {
+    gap: 2.5rem;
+    margin-bottom: 5rem;
+  }
+
+  .accordion-trigger {
+    padding: 2.2rem 0;
+  }
+
+  .accordion-btn-icon {
+    width: 48px;
+    height: 48px;
   }
 }
 
@@ -952,5 +1161,52 @@ body {
 
   .nav-link {
     font-size: 2.2rem;
+  }
+
+  /* Services Mobile Overrides */
+  .services-section {
+    padding: 100px 0 120px;
+  }
+
+  .services-container {
+    padding: 0 1.4rem;
+  }
+
+  .services-hero {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+    margin-bottom: 3.5rem;
+  }
+
+  .services-desc-box {
+    max-width: 100%;
+  }
+
+  .services-desc {
+    font-size: 1.05rem;
+  }
+
+  .capabilities-tag {
+    font-size: 0.95rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .accordion-trigger {
+    padding: 1.8rem 0;
+  }
+
+  .accordion-btn-icon {
+    width: 42px;
+    height: 42px;
+  }
+
+  .accordion-btn-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .panel-text {
+    font-size: 1.05rem;
   }
 }
