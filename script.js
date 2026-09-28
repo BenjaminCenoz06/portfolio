@@ -247,7 +247,7 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ===================================================
      8. MAGNETIC BUTTON EFFECT (ABOUT ME & MORE WORK)
   =================================================== */
-  const magneticButtons = document.querySelectorAll('.about-circle-btn, .more-work-btn');
+  const magneticButtons = document.querySelectorAll('.about-circle-btn, .more-work-btn, .footer-contact-circle');
   if (window.innerWidth > 768) {
     magneticButtons.forEach(btn => {
       btn.addEventListener('mousemove', (e) => {
@@ -352,4 +352,26 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }, { passive: true });
   }
+
+  /* ===================================================
+     11. FOOTER CONTACT BUTTON & LIVE GMT CLOCK
+  =================================================== */
+  const footerContactBtn = document.getElementById('footerContactBtn');
+  if (footerContactBtn) {
+    footerContactBtn.addEventListener('click', () => toggleHireModal(true));
+  }
+
+  function updateFooterGmtTime() {
+    const gmtEl = document.getElementById('footerGmtTime');
+    if (!gmtEl) return;
+    const now = new Date();
+    const hours = now.getUTCHours();
+    const minutes = now.getUTCMinutes();
+    const ampm = hours >= 12 ? 'pm' : 'am';
+    const formattedHours = String(hours % 12 || 12).padStart(2, '0');
+    const formattedMinutes = String(minutes).padStart(2, '0');
+    gmtEl.textContent = `${formattedHours}:${formattedMinutes} ${ampm} GMT+0`;
+  }
+  updateFooterGmtTime();
+  setInterval(updateFooterGmtTime, 1000);
 });
