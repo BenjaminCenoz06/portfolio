@@ -1,5 +1,5 @@
 /**
- * Maxime Veilleux — Portfolio Scripts
+ * Luca Uriel García — Portfolio Scripts
  * Interactions, Menu Toggle, Marquee and Subtle Parallax Effects
  */
 
@@ -365,12 +365,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const gmtEl = document.getElementById('footerGmtTime');
     if (!gmtEl) return;
     const now = new Date();
-    const hours = now.getUTCHours();
-    const minutes = now.getUTCMinutes();
-    const ampm = hours >= 12 ? 'pm' : 'am';
-    const formattedHours = String(hours % 12 || 12).padStart(2, '0');
-    const formattedMinutes = String(minutes).padStart(2, '0');
-    gmtEl.textContent = `${formattedHours}:${formattedMinutes} ${ampm} GMT+0`;
+    const timeStr = now.toLocaleTimeString('en-US', {
+      timeZone: 'America/Argentina/Buenos_Aires',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true
+    }).toLowerCase();
+    gmtEl.textContent = `${timeStr} GMT-3`;
   }
   updateFooterGmtTime();
   setInterval(updateFooterGmtTime, 1000);

@@ -1090,6 +1090,24 @@ body {
   transform: translateY(-4px) scale(1.05);
 }
 
+.region-badge {
+  font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  color: var(--text-primary);
+  opacity: 0.78;
+  transition: opacity 0.3s ease, color 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.brand-item:hover .region-badge {
+  opacity: 1;
+  color: var(--accent-lime);
+  transform: translateX(6px);
+}
+
 /* ==========================================================================
    PHILOSOPHY & PROJECTS SECTION ("Helping brands to stand out")
    ========================================================================== */
