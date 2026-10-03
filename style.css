@@ -1458,12 +1458,12 @@ body {
 
 /* Row 1 slides left */
 .track-left {
-  animation: slideGalleryLeft 42s linear infinite;
+  animation: slideGalleryLeft 48s linear infinite;
 }
 
 /* Row 2 slides right */
 .track-right {
-  animation: slideGalleryRight 42s linear infinite;
+  animation: slideGalleryRight 48s linear infinite;
 }
 
 .gallery-track:hover {
@@ -1491,42 +1491,57 @@ body {
 .gallery-card {
   width: clamp(340px, 28vw, 540px);
   height: clamp(230px, 19vw, 360px);
-  border-radius: 12px;
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
   overflow: hidden;
   cursor: pointer;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.45s ease, border-color 0.45s ease;
 }
 
 .gallery-card:hover {
-  transform: scale(1.035);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.75), 0 0 30px rgba(246, 255, 147, 0.08);
+  border-color: rgba(246, 255, 147, 0.32);
 }
 
 .card-inner {
-  width: 82%;
-  height: 82%;
+  width: 90%;
+  height: 88%;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  border-radius: 8px;
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  position: relative;
+}
+
+.card-inner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+  transition: opacity 0.3s ease;
 }
 
 .card-inner img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: brightness(0.97) contrast(1.02);
+  transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
 }
 
 .gallery-card:hover .card-inner img {
-  transform: scale(1.06);
+  transform: scale(1.055);
+  filter: brightness(1.04) contrast(1.04);
 }
 
 /* ==========================================================================
@@ -2303,8 +2318,15 @@ body {
   }
 
   .gallery-card {
-    width: 280px;
-    height: 190px;
+    width: 290px;
+    height: 195px;
+    border-radius: 12px;
+  }
+
+  .card-inner {
+    width: 90%;
+    height: 88%;
+    border-radius: 8px;
   }
 
   /* Testimonials Mobile Overrides */
