@@ -1385,6 +1385,17 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.modal-slide::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.45) 100%);
+  pointer-events: none;
+  z-index: 2;
 }
 
 .modal-slide img {
@@ -1392,6 +1403,9 @@ body {
   height: auto;
   max-height: 90%;
   object-fit: contain;
+  position: relative;
+  z-index: 1;
+  filter: grayscale(100%) contrast(112%) brightness(95%);
 }
 
 /* Floating "View" Cursor Badge */
@@ -1521,27 +1535,57 @@ body {
   position: relative;
 }
 
+/* Filtro overlay cinemático por arriba de la imagen */
+.card-inner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(12, 14, 18, 0.28) 0%,
+    rgba(12, 14, 18, 0.08) 40%,
+    rgba(12, 14, 18, 0.52) 100%
+  );
+  z-index: 2;
+  pointer-events: none;
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Biselado, borde y viñeta interna de alta gama */
 .card-inner::after {
   content: '';
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12), inset 0 0 28px rgba(0, 0, 0, 0.45);
   pointer-events: none;
-  transition: opacity 0.3s ease;
+  z-index: 3;
+  transition: box-shadow 0.4s ease;
 }
 
+/* Imagen en blanco y negro editorial de alta definición */
 .card-inner img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: brightness(0.97) contrast(1.02);
-  transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
+  position: relative;
+  z-index: 1;
+  filter: grayscale(100%) contrast(116%) brightness(92%);
+  transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), filter 0.55s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* Hover: micro-interacción suave para apreciar la fotografía */
 .gallery-card:hover .card-inner img {
   transform: scale(1.055);
-  filter: brightness(1.04) contrast(1.04);
+  filter: grayscale(0%) contrast(106%) brightness(102%);
+}
+
+.gallery-card:hover .card-inner::before {
+  opacity: 0.15;
+}
+
+.gallery-card:hover .card-inner::after {
+  box-shadow: inset 0 0 0 1px rgba(246, 255, 147, 0.35), inset 0 0 15px rgba(0, 0, 0, 0.25);
 }
 
 /* ==========================================================================
